@@ -5,9 +5,10 @@ let
     any-nix-shell        # fish support for nix shell
     asciinema            # record the terminal
     bitwarden-cli        # command-line client for the password manager
+    _1password-gui       # 1password
     bottom               # alternative to htop & ytop
     cachix               # nix caching
-    calibre              # e-book reader
+    # calibre              # e-book reader
     dconf2nix            # dconf (gnome) files to nix converter
     dive                 # explore docker layers
     docker-compose       # docker manager
@@ -18,6 +19,7 @@ let
     gimp                 # gnu image manipulation program
     glow                 # terminal markdown viewer
     gnomecast            # chromecast local files
+    gnumake              # Make
     hyperfine            # command-line benchmarking tool
     insomnia             # rest client with graphql support
     jitsi-meet-electron  # open source video calls and chat
@@ -37,6 +39,7 @@ let
     simplescreenrecorder # screen recorder gui
     slack                # messaging client
     spotify              # music source
+    syncthing
     tdesktop             # telegram messaging client
     tldr                 # summary of a man page
     tree                 # display files in a tree view
@@ -44,11 +47,17 @@ let
     xsel                 # clipboard support (also for neovim)
     yad                  # yet another dialog - fork of zenity
 
-    # work stuff
+    # browser
     firefox
+    chromium
 
     # fixes the `ar` error required by cabal
     binutils-unwrapped
+
+    mutt
+    thunderbird
+    evolution
+    evolution-data-server
   ];
 
   gitPkgs = with pkgs.gitAndTools; [
@@ -58,12 +67,13 @@ let
     tig           # diff and commit view
   ];
 
-  # gnomePkgs = with pkgs.gnome3; [ 
-  #   eog            # image viewer
-  #   evince         # pdf reader
-  #   gnome-calendar # calendar
-  #   nautilus       # file manager
-  # ];
+  gnomePkgs = with pkgs.gnome3; [
+    eog            # image viewer
+    evince         # pdf reader
+    gnome-calendar # calendar
+    nautilus       # file manager
+
+  ];
 
   haskellPkgs = with pkgs.haskellPackages; [
     brittany                # code formatter
@@ -102,13 +112,13 @@ in
     (import ./overlays/coc-nvim)
   ];
 
-  # imports = (import ./programs) ++ [(import ./themes)];
-  imports = (import ./programs);
+  imports = (import ./programs) ++ [(import ./themes)];
+  # imports = (import ./programs);
 
   xdg.enable = true;
 
   home = {
-    packages = defaultPkgs ++ gitPkgs ++ haskellPkgs;
+    packages = defaultPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs;
 
     sessionVariables = {
       DISPLAY = ":0";
