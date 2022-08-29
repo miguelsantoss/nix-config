@@ -46,6 +46,7 @@ in
       ping = "prettyping";
       tree = "exa -T";
       gs   = "git status";
+      gd   = "git diff";
       vim  = "nvim";
       v    = "nvim";
     };

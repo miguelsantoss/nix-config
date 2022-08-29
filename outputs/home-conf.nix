@@ -1,17 +1,15 @@
-{ system, nixpkgs, nurpkgs, home-manager, ... }:
+{ inputs, system, ... }:
+
+with inputs;
 
 let
-  username = "miguelsantoss";
-  homeDirectory = "/home/${username}";
-  configHome = "${homeDirectory}/.config";
-
   pkgs = import nixpkgs {
     inherit system;
 
     config.allowUnfree = true;
-    config.xdg.configHome = configHome;
 
     overlays = [
+      neovim-flake.overlays.default
       nurpkgs.overlay
     ];
   };
@@ -21,19 +19,19 @@ let
     nurpkgs = pkgs;
   };
 
-  mkHome = conf: (
-    home-manager.lib.homeManagerConfiguration rec {
-      inherit pkgs system username homeDirectory;
-
-      stateVersion = "22.05";
-      configuration = conf;
-    });
-
-  conf = import ../home/home.nix {
-    inherit nur pkgs;
-    inherit (pkgs) config lib stdenv;
-  };
+  imports = [
+    neovim-flake.nixosModules.hm
+    ../home/home.nix
+  ];
 in
 {
-  miguelsantoss = mkHome conf;
+  miguelsantoss = home-manager.lib.homeManagerConfiguration rec {
+    inherit pkgs;
+
+    extraSpecialArgs = {
+      addons = nur.repos.rycee.firefox-addons;
+    };
+
+    modules = [{ inherit imports; }];
+  };
 }

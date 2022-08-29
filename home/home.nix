@@ -1,6 +1,10 @@
 { config, lib, pkgs, stdenv, ... }:
 
 let
+  username = "miguelsantoss";
+  homeDirectory = "/home/${username}";
+  configHome = "${homeDirectory}/.config";
+
   defaultPkgs = with pkgs; [
     any-nix-shell        # fish support for nix shell
     asciinema            # record the terminal
@@ -48,7 +52,6 @@ let
     yad                  # yet another dialog - fork of zenity
 
     # browser
-    firefox
     chromium
 
     # fixes the `ar` error required by cabal
@@ -108,16 +111,18 @@ in
 {
   programs.home-manager.enable = true;
 
-  nixpkgs.overlays = [
-    (import ./overlays/coc-nvim)
-  ];
+  # imports = (import ./programs) ++ [(import ./themes)];
+  imports = (import ./programs);
 
-  imports = (import ./programs) ++ [(import ./themes)];
-  # imports = (import ./programs);
-
-  xdg.enable = true;
+  xdg = {
+    inherit configHome;
+    enable = true;
+  };
 
   home = {
+    inherit username homeDirectory;
+    stateVersion = "22.11";
+
     packages = defaultPkgs ++ gitPkgs ++ gnomePkgs ++ haskellPkgs;
 
     sessionVariables = {

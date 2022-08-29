@@ -1,8 +1,9 @@
 [
   ./alacritty
+  ./firefox
   ./git
   ./fish
-  ./neovim
+  ./neovim-ide
   ./kitty
   ./tmux
 ]

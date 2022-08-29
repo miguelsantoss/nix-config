@@ -14,30 +14,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
+    neovim-flake = {
+      # url = git+file:///home/gvolpe/workspace/neovim-flake;
+      url = github:gvolpe/neovim-flake;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Extras
+    # emacs-overlay.url  = "github:nix-community/emacs-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, nurpkgs, home-manager, flake-utils, ... }:
+  outputs = inputs @ { self, nixpkgs, ... }:
     let
-      inherit (nixpkgs) lib;
       system = "x86_64-linux";
     in {
       homeConfigurations = (
         import ./outputs/home-conf.nix {
-          inherit system nixpkgs nurpkgs home-manager;
+          inherit inputs system;
         }
       );
 
       nixosConfigurations = (
         import ./outputs/nixos-conf.nix {
-          inherit (nixpkgs) lib;
           inherit inputs system;
-        }
-      );
-
-      devShell.${system} = (
-        import ./outputs/installation.nix {
-          inherit system nixpkgs;
         }
       );
     };

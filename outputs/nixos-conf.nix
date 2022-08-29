@@ -1,12 +1,15 @@
-{ lib, inputs, system, ... }:
+{ inputs, system, ... }:
 
+let
+  nixosSystem = inputs.nixpkgs.lib.nixosSystem;
+in
 {
-   asus = lib.nixosSystem {
+   asus = nixosSystem {
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
-      ../system/configuration.nix
       ../system/machine/asus/configuration.nix
+      ../system/configuration.nix
     ];
   };
 }

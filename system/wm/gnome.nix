@@ -11,7 +11,7 @@
   # Enable the X11 windowing system.
   services = {
     gnome.gnome-keyring.enable = true;
-    upower.enable = true;
+    # upower.enable = true;
 
     dbus = {
       enable = true;
