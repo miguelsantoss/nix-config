@@ -10,6 +10,7 @@ let
 
     overlays = [
       neovim-flake.overlays.default
+      emacs-overlay.overlay
       nurpkgs.overlay
     ];
   };
@@ -21,6 +22,7 @@ let
 
   imports = [
     neovim-flake.nixosModules.hm
+    nix-doom-emacs.hmModule
     ../home/home.nix
   ];
 in

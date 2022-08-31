@@ -111,6 +111,7 @@ in
 {
   programs.home-manager.enable = true;
 
+
   # imports = (import ./programs) ++ [(import ./themes)];
   imports = (import ./programs);
 

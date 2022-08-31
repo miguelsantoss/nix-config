@@ -20,24 +20,37 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Extras
-    # emacs-overlay.url  = "github:nix-community/emacs-overlay";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.emacs-overlay.follows = "emacs-overlay";
+    };
+
+    # emacs-plz = {
+    #   url = "github:alphapapa/plz.el";
+    #   flake = false;
+    # };
   };
 
   outputs = inputs @ { self, nixpkgs, ... }:
     let
-      system = "x86_64-linux";
-    in {
-      homeConfigurations = (
-        import ./outputs/home-conf.nix {
-          inherit inputs system;
-        }
-      );
+    system = "x86_64-linux";
+  in {
+    homeConfigurations = (
+      import ./outputs/home-conf.nix {
+        inherit inputs system;
+      }
+    );
 
-      nixosConfigurations = (
-        import ./outputs/nixos-conf.nix {
-          inherit inputs system;
-        }
-      );
-    };
+    nixosConfigurations = (
+      import ./outputs/nixos-conf.nix {
+        inherit inputs system;
+      }
+    );
+  };
 }
