@@ -7,4 +7,5 @@
   ./emacs
   ./kitty
   ./tmux
+  ./vscode
 ]
