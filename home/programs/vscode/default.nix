@@ -8,6 +8,8 @@
       matklad.rust-analyzer
       jnoortheen.nix-ide
       golang.go
+      asvetliakov.vscode-neovim
+      betterthantomorrow.calva
     ];
   };
 }
