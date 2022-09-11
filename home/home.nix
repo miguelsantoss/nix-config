@@ -13,6 +13,7 @@ let
     bottom               # alternative to htop & ytop
     cachix               # nix caching
     # calibre              # e-book reader
+    clojure
     dconf2nix            # dconf (gnome) files to nix converter
     dive                 # explore docker layers
     docker-compose       # docker manager
@@ -50,6 +51,7 @@ let
     vlc                  # media player
     xsel                 # clipboard support (also for neovim)
     yad                  # yet another dialog - fork of zenity
+    unzip
 
     # browser
     chromium
