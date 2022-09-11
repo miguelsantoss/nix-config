@@ -37,6 +37,10 @@
 
   # Enable Docker & VirtualBox support.
   virtualisation = {
+    podman = {
+      enable = true;
+    };
+
     docker = {
       enable = true;
       autoPrune = {
